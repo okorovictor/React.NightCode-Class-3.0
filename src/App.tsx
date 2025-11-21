@@ -6,7 +6,15 @@ function App() {
   const inputRef = useRef<MyInputHandle>(null);
 
   const handleFocusClick = () => {
-    inputRef.current?.focus();
+    if (
+      inputRef.current?.value() === null ||
+      inputRef.current?.value() === ""
+    ) {
+      alert("Fill the input form");
+      inputRef.current?.focus();
+    } else {
+      console.log(inputRef.current?.value());
+    }
   };
   return (
     <main className="grid justify-items-center min-h-screen py-20 gap-5 bg-gray-200">

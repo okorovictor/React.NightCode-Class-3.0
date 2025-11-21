@@ -2,6 +2,7 @@ import { useRef, useImperativeHandle, forwardRef } from "react";
 
 export interface MyInputHandle {
   focus: () => void;
+  value: () => string | undefined;
 }
 
 const MyInput = forwardRef<MyInputHandle>((_, ref) => {
@@ -9,6 +10,7 @@ const MyInput = forwardRef<MyInputHandle>((_, ref) => {
 
   useImperativeHandle(ref, () => ({
     focus: () => inputRef.current?.focus(),
+    value: () => inputRef.current?.value,
   }));
 
   return (
