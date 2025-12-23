@@ -1,29 +1,58 @@
 import "./App.css";
-import { useRef } from "react";
-import MyInput, { type MyInputHandle } from "./MyInput";
+import { useReducer } from "react";
+
+type State = {
+  count: number;
+};
+type Action = { type: "increment" } | { type: "decrement" } | { type: "reset" };
+
+function reducer(state: State, action: Action) {
+  switch (action.type) {
+    case "increment":
+      return { count: state.count + 1 };
+    case "decrement":
+      return { count: state.count - 1 };
+    case "reset":
+      return { count: 0 };
+
+    default:
+      return state;
+  }
+}
 
 function App() {
-  const inputRef = useRef<MyInputHandle>(null);
+  const [state, dispatch] = useReducer(reducer, { count: 0 });
 
-  const handleFocusClick = () => {
-    if (
-      inputRef.current?.value() === null ||
-      inputRef.current?.value() === ""
-    ) {
-      alert("Fill the input form");
-      inputRef.current?.focus();
-    } else {
-      console.log(inputRef.current?.value());
-    }
+  const handleIncrement = () => {
+    dispatch({ type: "increment" });
   };
+  const handleDecrement = () => {
+    dispatch({ type: "decrement" });
+  };
+  const handleReset = () => {
+    dispatch({ type: "reset" });
+  };
+
   return (
-    <main className="grid justify-items-center min-h-screen py-20 gap-5 bg-gray-200">
-      <MyInput ref={inputRef} />
+    <main className="flex flex-col justify-center items-center min-h-screen gap-5 bg-gray-200">
+      <h3 className="text-4xl">{state.count}</h3>
       <button
-        onClick={handleFocusClick}
-        className="bg-black text-white p-3 cursor-pointer text-sm mb-5 rounded-2xl"
+        className="bg-blue-400 text-3xl text-white px-12 py-3 cursor-pointer"
+        onClick={handleIncrement}
       >
-        Click me!
+        +
+      </button>
+      <button
+        className="bg-blue-400 text-3xl text-white px-13 py-3 cursor-pointer"
+        onClick={handleDecrement}
+      >
+        -
+      </button>
+      <button
+        className="bg-blue-400 text-3xl text-white px-5 py-3 cursor-pointer"
+        onClick={handleReset}
+      >
+        Reset
       </button>
     </main>
   );
