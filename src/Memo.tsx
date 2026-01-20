@@ -5,9 +5,10 @@ function Memo() {
   const [val, setVal] = useState(1);
   const [double, setDouble] = useState(1);
 
-  const getDouble = useMemo(() => {
-    return slowFunction(val);
-  }, [val]);
+  // const getDouble = useMemo(() => {
+  //   return slowFunction(val);
+  // }, [val]);
+  const getDouble = slowFunction(double);
 
   function slowFunction(number: number) {
     console.log("Calling Slow Function");
